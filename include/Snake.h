@@ -1,7 +1,7 @@
 #ifndef Snake_h
 #define Snake_h
 
-#include <vector>
+#include <utility>
 
 class Snake{
     private:
