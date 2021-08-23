@@ -3,6 +3,10 @@
 #include <iostream>
 #include <vector>
 
+#include "Arquivo.h"
+#include "Snake.h"
+#include "Level.h"
+
 
 class SnakeGame{
     public:
@@ -17,16 +21,18 @@ class SnakeGame{
 
     private:
         //<! atributos adicione outros se quiser
-        std::vector<std::string> maze; //<! vector contendo o labirinto atual, pode ser interpretado como uma matriz
+        std::vector<Level> mazes; //<! vector contendo os labirintos da partida
         int frameCount; //<! contador de frames, usado apenas como exemplo
         std::string choice; //<! usado na função process_actions para guardar a escolha do usuário
         GameStates state; //<! guarda o estado do jogo
+        Arquivo arquivo; //<! guarda o caminho do arquivo dos níveis
+        Snake snake; //<! guarda o objeto do tipo snake daquele jogo
 
     public:
         /**
         * @brief construtor padrão, fique à vontade para adicionar parâmetros se desejar
         **/
-        SnakeGame();
+        SnakeGame(char *arquivo_[]);
 
         /**
         * @brief chamado no main, este loop executa o jogo indefinidamente até que o usuário escolha terminar!

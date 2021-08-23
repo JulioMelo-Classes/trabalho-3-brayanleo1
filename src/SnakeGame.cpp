@@ -2,31 +2,53 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 #include <chrono> //por causa do sleep
 #include <thread> //por causa do sleep
 
 using namespace std;
 
-SnakeGame::SnakeGame(){
+SnakeGame::SnakeGame(char *arquivo_[]){
     choice = "";
     frameCount = 0;
+    Arquivo aq(arquivo_[1]);
+    arquivo = aq;
     initialize_game();
 }
 
 void SnakeGame::initialize_game(){
-    //carrega o nivel ou os níveis
-    ifstream levelFile("data/maze1.txt"); //só dá certo se o jogo for executado dentro da raíz do diretório (vc vai resolver esse problema pegando o arquivo da linha de comando)
-    int lineCount = 0;
-    string line;
-    if(levelFile.is_open()){
-        while(getline(levelFile, line)){ //pega cada linha do arquivo
-            if(lineCount > 0){ //ignora a primeira linha já que ela contem informações que não são uteis para esse exemplo
-                maze.push_back(line);
-            }
-            lineCount++;
+    //Carregar arquivo
+    auto r = arquivo.lerLinhas();
+    auto i = r.begin();
+
+    //Carregar nível ou níveis
+    while(i != r.end()) {
+        Level lev;
+        std::string campoAtual = *i;
+        stringstream ss1;
+
+        ss1<<campoAtual;
+        int linhas;
+        ss1 >> linhas;
+        int colunas;
+        ss1 >> colunas;
+        int comidas;
+        ss1 >> comidas;
+
+        ++i;
+        lev.setDim(linhas, colunas);
+
+        if(lev.verifyDim()){//Verificando se as dimensões são válidas
+            lev.makeLab(i, comidas);
+            mazes.push_back(lev);
         }
+
     }
+
+    Snake snk(0/*Modo de jogo passado por comando*/, mazes[0].getInitPos().first, mazes[0].getInitPos().second);
+    snake = snk;
+
     state = RUNNING;
 }
 
@@ -97,9 +119,7 @@ void SnakeGame::render(){
     switch(state){
         case RUNNING:
             //desenha todas as linhas do labirinto
-            for(auto line : maze){
-                cout<<line<<endl;
-            }
+            mazes[0].printMaze(snake.getPos(), snake.getDirection());
             break;
         case WAITING_USER:
             cout<<"Você quer continuar com o jogo? (s/n)"<<endl;

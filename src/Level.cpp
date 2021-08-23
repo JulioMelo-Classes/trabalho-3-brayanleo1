@@ -3,7 +3,28 @@
 
 using namespace std;
 
-Level::Level(){}//Para fazer depois
+Level::Level(){}
+
+void Level::makeLab(std::vector<std::string>::iterator labIt, int foods){
+    foodStatus.first = 0;
+    foodStatus.second = foods;
+    std::vector<std::vector<char>> lab;
+    for(int x = 0; x != dim.first; x++) {
+        std::vector<char> linha;
+        for(int y = 0; y != dim.second; y++) {
+            linha.push_back((*labIt)[y]);
+            if((*labIt)[y] == '*'){
+                initPos.first = x;
+                initPos.second = y;
+            }
+        }
+        
+        ++labIt;
+        lab.push_back(linha);
+    }
+
+    maze = lab;
+}
 
 void Level::genFood(){
     srand(time(0));
@@ -14,7 +35,7 @@ void Level::genFood(){
     foodPos.second = yPos;
 }
 
-void Level::getDim(int x, int y){
+void Level::setDim(int x, int y){
     dim.first = x;
     dim.second = y;
 }
@@ -25,4 +46,24 @@ bool Level::verifyDim(){
         correct = false;
     }
     return correct;
+}
+
+//Eat and Move
+
+void Level::printMaze(std::pair<int, int> snkPos, char snkDir){
+    for (int i = 0; i != dim.first; i++) {
+        for(int j = 0; j != dim.second; j++) {
+            if(snkPos.first == i && snkPos.second == j) {
+                cout << snkDir;
+            } else {
+                cout << maze[i][j];
+            }
+        }
+        cout << endl;
+    }
+    
+}
+
+std::pair<int, int> Level::getInitPos(){
+    return initPos;
 }

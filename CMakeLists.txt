@@ -13,11 +13,11 @@ set (CMAKE_CXX_STANDARD 14)
 include_directories( include )
 
 # Cria um executável com nome "KenoGame", adiciona neste executável os arquivos do src e do include
-add_executable( KenoGame
+add_executable( Snaze
+                src/Level.cpp
+                src/Snake.cpp
+                src/SnakeGame.cpp
                 src/Arquivo.cpp
-                src/KenoBet.cpp
-                src/KenoGame.cpp
-                src/Interface.cpp
-                src/main.cpp )
+                src/Snaze.cpp )
 
 # The end
