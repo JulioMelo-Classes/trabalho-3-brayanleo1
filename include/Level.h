@@ -24,12 +24,14 @@ class Level {
         */
         void makeLab(std::vector<std::string>::iterator labIt, int foods);
 
-        //! Gera aleatoriamente e associa a posição da comida gerada
-        void genFood();
+        /*! Gera aleatoriamente e associa a posição da comida gerada
+                @param snkPos Par contendo a posição x, y da cobra no mapa
+        */
+        void genFood(std::pair <int, int> snkPos);
 
         /*! Recebe e adiciona as dimensões do labirinto
-                @param x Parâmetro de colunas que o labirinto terá
-                @param y Parâmetro de linhas que o labirinto terá
+                @param x Parâmetro de linhas que o labirinto terá
+                @param y Parâmetro de colunas que o labirinto terá
         */
         void setDim(int x, int y);
 
@@ -38,11 +40,14 @@ class Level {
         */
         bool verifyDim();
 
-        /*! Processa ação de comer a comida, adicionando corpo nas costas da cobra
+        /*! Processa ação de comer a comida, adicionando corpo nas costas da cobra (se necessário)
                 @param snkPos Par contendo posição x,y da cobra
                 @param snkDir Char representando a direção para qual a cobra está olhando
+                @param mode Int que representa o modo da cobra (com ou sem cauda)
+
+                @return Um boolean que será true se algo foi consumide e false caso contrário
         */
-        void eatFood(std::pair<int, int> snkPos, char snkDir);
+        bool eatFood(std::pair<int, int> snkPos, char snkDir, int mode);
 
         /*! Move o corpo da cobra adicionando um corpo nas costas da cobra e removendo o mais antigo colocado
                 @param snkPos Par contendo posição x,y da cobra
@@ -61,7 +66,28 @@ class Level {
         */
         std::pair<int, int> getInitPos();
 
+        //! Imprime o HUD do level
+        void printHUD(int vidas);
 
+        /*! Retorna o par de inteiros da posição da comida
+                @return Par contendo a posição da comida
+        */
+        std::pair<int, int> getFoodPos();
+
+        /*! Retorna iterator para o primeiro elemento da posição do maze
+                @return Iterator apontando para o primeiro elemento da posição do maze
+        */
+        std::vector<std::vector<char>>::iterator getMazeIt();
+
+        /*! Retorna um booleano que diz se cobra se chocou contra a parede
+                @param snkPos Par que representa posição da cobra
+
+                @return Booleano de valor true se cobra se chocou contra a parede e false caso contrário
+        */
+        bool verifyCrash(std::pair <int, int> snkPos);
+
+        //! Reseta a quantidade de comidas consumidas
+        void resetFood();
 };
 
 #endif

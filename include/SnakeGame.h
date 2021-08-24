@@ -6,6 +6,7 @@
 #include "Arquivo.h"
 #include "Snake.h"
 #include "Level.h"
+#include "Player.h"
 
 
 class SnakeGame{
@@ -16,7 +17,11 @@ class SnakeGame{
         enum GameStates{
             RUNNING, //<! quando o jogo está executando o estado é RUNNING
             GAME_OVER, //<! quando o jogo deve terminar o estado é GAME_OVER
-            WAITING_USER //<! quando o jogo deve esperar por uma entrada do usuário o estado é WAITING_USER
+            WAITING_USER, //<! quando o jogo deve esperar por uma entrada do usuário o estado é WAITING_USER
+            DEATH, //! quando o jogo detectou a batida da cobra e faz os procedimentos necessários
+            NEXT_LEVEL, //! quando o jogo detectou que a cobra comeu tudo daquele nível e faz o que o usuário desejar
+            RESET, //! quando o jogo recebe o comando de resetar o nível atual
+            RESTART //quando o jogo recebe o comando de recomeçar do primeiro nível
         };
 
     private:
@@ -27,7 +32,10 @@ class SnakeGame{
         GameStates state; //<! guarda o estado do jogo
         Arquivo arquivo; //<! guarda o caminho do arquivo dos níveis
         Snake snake; //<! guarda o objeto do tipo snake daquele jogo
-
+        int mode; //<! guarda o modo de jogo escolhido (0 = sem rabo, 1 = com rabo)
+        Player player; //<! guarda o objeto do tipo player daquele jogo
+        int score; //<! guarda a pontuação da cobra
+        int levelsGone; //<! guarda a quantidade de níveis que já foram passados
     public:
         /**
         * @brief construtor padrão, fique à vontade para adicionar parâmetros se desejar
@@ -43,7 +51,7 @@ class SnakeGame{
         /**
         * @brief realiza a inicialização geral do jogo, fique à vontade para adicionar parâmetros se achar que deve
         **/
-        void initialize_game();
+        void initialize_game(int mode_);
 
         /**
         * @brief atualiza o estado do jogo, basicamente movendo os objetos, sorteando novas posições de comida

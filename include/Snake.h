@@ -6,7 +6,6 @@
 class Snake{
     private:
         std::pair<int, int> position; //<! Par contendo a posição x,y atual da cobra
-        int mode; //<! Inteiro indicando o modo de jogo selecionado
         int lives; //<! Inteiro contendo a quantidade de vidas da cobra
         char direction; //<! Caractere contendo a direção que a cobra está encarando (>v^<)
 
@@ -15,11 +14,10 @@ class Snake{
         Snake();
 
         /*! Construtor de Snake que cria um objeto Snake de acordo com as regras
-                @param mode_ O inteiro representando o modo de jogo
                 @param x O inteiro representando a posição x da cobra
                 @param y O inteiro representando a posição y da cobra
         */
-        Snake(int mode_, int x, int y);
+        Snake(int x, int y);
 
         //! Move a cobra para cima
         void moveUp();
@@ -53,7 +51,15 @@ class Snake{
         /*! Retorna char que indica a posição da cobra
                 @return Char que indica a posição da cobra
         */
-       char getDirection();
+        char getDirection();
+
+        /*! Retorna um inteiro representando a quantidade de vidas da cobra
+                @return Int que indica a quantidade de vidas da cobra
+        */
+        int getLives();
+
+        //! Reseta as vidas da cobra
+        void resetLives();
 };
 
 #endif

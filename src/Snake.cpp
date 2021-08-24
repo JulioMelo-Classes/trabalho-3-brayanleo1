@@ -4,8 +4,7 @@ using namespace std;
 
 Snake::Snake(){}
 
-Snake::Snake(int mode_, int x, int y){
-    mode = mode_;
+Snake::Snake(int x, int y){
     lives = 5;
     position.first = x;
     position.second = y;
@@ -13,22 +12,22 @@ Snake::Snake(int mode_, int x, int y){
 }
 
 void Snake::moveUp(){
-    position.second = position.second - 1;
+    position.first = position.first - 1;
     direction = 'v';
 }
 
 void Snake::moveDown(){
-    position.second = position.second + 1;
+    position.first = position.first + 1;
     direction = '^';
 }
 
 void Snake::moveLeft(){
-    position.first = position.first - 1;
+    position.second = position.second - 1;
     direction = '>';
 }
 
 void Snake::moveRight(){
-    position.first = position.first + 1;
+    position.second = position.second + 1;
     direction = '<';
 }
 
@@ -52,4 +51,12 @@ std::pair<int, int> Snake::getPos(){
 
 char Snake::getDirection(){
     return direction;
+}
+
+int Snake::getLives(){
+    return lives;
+}
+
+void Snake::resetLives(){
+    lives = 5;
 }

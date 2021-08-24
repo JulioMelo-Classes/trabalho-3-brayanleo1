@@ -18,6 +18,7 @@ add_executable( Snaze
                 src/Snake.cpp
                 src/SnakeGame.cpp
                 src/Arquivo.cpp
+                src/Player.cpp
                 src/Snaze.cpp )
 
 # The end
