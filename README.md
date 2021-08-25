@@ -30,12 +30,12 @@ No windows:
 
 Os labiríntos pré feitos e suas descrições são:
 
-easiest.txt -> o mais fácil e rápido, não importa o modo \\
-easy.txt -> fácil porem mais demorado, não importa o modo \\
-easyImpPack.txt -> pack com os 2 primeiros fáceis e último pulado caso o modo seja com cauda(por ser impossível gerar comida) e fácil e um pouco mais lento sem cauda \\
-easyPack.txt -> pack com os 3 níveis fáceis criados, escalando o tempo para cada nível mais a frente, não importa o modo \\
-impossible.txt -> nível reto impossível, perda de todas as vídas eminente, não importa o modo \\
-maze1.txt -> nível padrão com pequena chance da cobra colidir contra a parede ou contra si mesma caso tenha cauda \\
-veryEasy.txt -> nível fácil com agilidade entre o easiest e o easy, não importa o modo \\
+easiest.txt -> o mais fácil e rápido, não importa o modo <br>
+easy.txt -> fácil porem mais demorado, não importa o modo <br>
+easyImpPack.txt -> pack com os 2 primeiros fáceis e último pulado caso o modo seja com cauda(por ser impossível gerar comida) e fácil e um pouco mais lento sem cauda <br>
+easyPack.txt -> pack com os 3 níveis fáceis criados, escalando o tempo para cada nível mais a frente, não importa o modo <br>
+impossible.txt -> nível reto impossível, perda de todas as vídas eminente, não importa o modo <br>
+maze1.txt -> nível padrão com pequena chance da cobra colidir contra a parede ou contra si mesma caso tenha cauda <br>
+veryEasy.txt -> nível fácil com agilidade entre o easiest e o easy, não importa o modo <br>
 
 
