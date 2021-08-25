@@ -21,8 +21,10 @@ class Level {
         /*! Método que registra o labirinto, posição inicial e comidas a serem consumidas
                 @param labIt Iterator apontando para o vetor de strings do início do labirinto
                 @param foods Inteiro que representa a quantidade de comida total do labirinto
+        
+                @return Booleano indicando true se o mapa foi criado com sucesso ou false se há problema no mapa
         */
-        void makeLab(std::vector<std::string>::iterator labIt, int foods);
+        bool makeLab(std::vector<std::string>::iterator labIt, int foods);
 
         /*! Gera aleatoriamente e associa a posição da comida gerada
                 @param snkPos Par contendo a posição x, y da cobra no mapa
@@ -86,8 +88,13 @@ class Level {
         */
         bool verifyCrash(std::pair <int, int> snkPos);
 
-        //! Reseta a quantidade de comidas consumidas
+        //! Reseta a quantidade de comidas consumidas e os espaços ocupados pelo corpo
         void resetFood();
+
+        /*! Verifica se todas as comidas foram consumidas e retorna true se for o caso, false caso contrárioa
+                @return Booleano de valor  true se todas as comidas foram consumidas e false caso contrário
+        */
+        bool verifyWin();
 };
 
 #endif

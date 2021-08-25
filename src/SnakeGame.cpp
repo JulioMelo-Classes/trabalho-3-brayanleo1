@@ -27,7 +27,7 @@ void SnakeGame::initialize_game(int mode_){
     //Carregar arquivo
     auto r = arquivo.lerLinhas();
     auto i = r.begin();
-    if(mode_ = '1') {
+    if(mode_ == 49) {//Representação de 1
         mode = 1;
     } else {
         mode = 0;
@@ -51,9 +51,15 @@ void SnakeGame::initialize_game(int mode_){
         lev.setDim(linhas, colunas);
 
         if(lev.verifyDim()){//Verificando se as dimensões são válidas
-            lev.makeLab(i, comidas);
-            lev.genFood(snake.getPos());
-            mazes.push_back(lev);
+            bool gerou = lev.makeLab(i, comidas);
+            if(gerou == true && mode == 1){
+                lev.genFood(snake.getPos());
+                mazes.push_back(lev);
+            } else if(mode == 0){
+                lev.genFood(snake.getPos());
+                mazes.push_back(lev);
+            }
+            
         }
 
     }
@@ -100,6 +106,12 @@ void SnakeGame::process_actions(){
         case RESTART:
             cin>>std::ws>>choice;
             break;
+        case NEXT_LEVEL:
+            cin>>std::ws>>choice;
+            break;
+        case RESET:
+            cin>>std::ws>>choice;
+            break;
         default:
             //nada pra fazer aqui
             break;
@@ -111,8 +123,9 @@ void SnakeGame::update(){
     switch(state){
         case RUNNING:
             {
-                if(frameCount>0 && frameCount%10 == 0) //depois de 10 frames o jogo pergunta se o usuário quer continuar
-                    state = WAITING_USER;
+                /*if(frameCount>0 && frameCount%10 == 0) //depois de 10 frames o jogo pergunta se o usuário quer continuar
+                    state = WAITING_USER;*/
+                
                 //Bateu na parede?
                 if(mazes[levelsGone].verifyCrash(snake.getPos())){
                     if(snake.getLives() == 1){
@@ -120,10 +133,22 @@ void SnakeGame::update(){
                         state = RESTART;
                         break;
                     }
-
                     state = DEATH;
                     break;
                 }
+
+                //Venceu a fase?(Comeu todas as comidas da fase atual)
+                if(mazes[levelsGone].verifyWin()){
+                    //Venceu o jogo?(Essa é a última fase?)
+                    if((levelsGone + 1) == mazes.size()){//Sim, última fase
+                    state = WIN;
+                    break;
+                }
+                    //Não, ainda tem mais fase pela frente
+                    state = NEXT_LEVEL;
+                    break;
+                }
+
 
                 //Diminui a pontuação por ter se movido
                 score = score - 1;
@@ -136,7 +161,7 @@ void SnakeGame::update(){
                     score = score + 10;
                 }
 
-                //Move a cobra caso o corpo esteja ativado
+                //Move o corpo caso o mesmo esteja ativado
                 if(mode == 1 && comeu == false) {
                     mazes[levelsGone].move(snake.getPos(), snake.getDirection());
                 }
@@ -144,8 +169,8 @@ void SnakeGame::update(){
             }
         case WAITING_USER: //se o jogo estava esperando pelo usuário então ele testa qual a escolha que foi feita
             if(choice == "n"){
-                state = GAME_OVER;
-                game_over();
+                state = RESET;
+                break;
             }
             else{
                 state = RUNNING;
@@ -158,6 +183,7 @@ void SnakeGame::update(){
                     state = RESTART;
                     break;
                 }
+                player.resetCommands();
                 score = 1000; //Reseta o score para valor padrão
                 snake.removeLife(); //Remove uma vida
                 snake.realocateSnake(mazes[levelsGone].getInitPos().first, mazes[levelsGone].getInitPos().second); //Realoca a cobra
@@ -173,10 +199,10 @@ void SnakeGame::update(){
                     game_over();
                     break;
                 }
-
+                player.resetCommands();
                 levelsGone = 0;
                 snake.realocateSnake(mazes[levelsGone].getInitPos().first, mazes[levelsGone].getInitPos().second); //Realoca a cobra
-                score = 1000;
+                score = 1000; //Reseta o score
                 snake.lookUp(); //Reseta direção de olhar da cobra para cima
 
                 //Reseta o contador de comida de todas as fases
@@ -185,6 +211,44 @@ void SnakeGame::update(){
                 }
                 
                 snake.resetLives();
+                state = RUNNING;
+                break;
+            }
+        case WIN: 
+            {
+                state = RESTART;
+                break;
+            }
+        case NEXT_LEVEL:
+            {
+                //Passa para o próximo nível?
+                if(choice == "n"){ //Não, então quer resetar esse nível?
+                    state = RESET;
+                    break;
+                }
+
+                //Sim! Então passa pro próximo mapa e reseta as vidas.
+                player.resetCommands();
+                snake.resetLives();
+                levelsGone = levelsGone + 1; //Próximo nível
+                snake.realocateSnake(mazes[levelsGone].getInitPos().first,mazes[levelsGone].getInitPos().second);
+                snake.lookUp();
+                state = RUNNING;
+                break;
+            }
+        case RESET:
+            {
+                //Deseja só reiniciar esse nível?
+                if(choice == "n"){//Não, bota pra começar tudo denovo
+                    state = RESTART;
+                    break;
+                }
+
+                //Sim, então apaga as frutas comidas desse nível, realoca a cobra etc.
+                player.resetCommands();
+                mazes[levelsGone].resetFood();
+                snake.realocateSnake(mazes[levelsGone].getInitPos().first,mazes[levelsGone].getInitPos().second);
+                snake.lookUp();
                 state = RUNNING;
                 break;
             }
@@ -238,6 +302,15 @@ void SnakeGame::render(){
             break;
         case RESTART:
             cout<<"Você deseja recomeçar esse jogo?"<<endl;
+            break;
+        case WIN:
+            cout<<"Você venceu! Meus parabéns!"<<endl;
+            break;
+        case NEXT_LEVEL:
+            cout<<"Fase concluída! Deseja passar para o próximo nível?"<<endl;
+            break;
+        case RESET:
+            cout<<"Deseja reiniciar desse nível?"<<endl;
             break;
     }
     frameCount++;

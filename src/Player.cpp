@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <algorithm>//std::find
 
 using namespace std;
 
@@ -99,4 +100,12 @@ char Player::next_move(){
 
 bool Player::getWay(){
     return way;
+}
+
+void Player::resetCommands(){
+    int i = 0;
+    while(i != directions.size()){
+        directions.erase(directions.begin());
+    }
+    way = false;
 }

@@ -5,10 +5,11 @@ using namespace std;
 
 Level::Level(){}
 
-void Level::makeLab(std::vector<std::string>::iterator labIt, int foods){
+bool Level::makeLab(std::vector<std::string>::iterator labIt, int foods){
     foodStatus.first = 0;
     foodStatus.second = foods;
     std::vector<std::vector<char>> lab;
+    int labLiv = 0;
     for(int x = 0; x != dim.first; x++) {
         std::vector<char> linha;
         for(int y = 0; y != dim.second; y++) {
@@ -19,6 +20,10 @@ void Level::makeLab(std::vector<std::string>::iterator labIt, int foods){
             } else { //Se não, bote o que está no mapa mesmo
                 linha.push_back((*labIt)[y]);
             }
+
+            if((*labIt)[y] == ' '){
+                labLiv = labLiv + 1;
+            }
         }
         
         ++labIt;
@@ -26,22 +31,36 @@ void Level::makeLab(std::vector<std::string>::iterator labIt, int foods){
     }
 
     maze = lab;
+    if(labLiv <= foods + 1){
+        return false;
+    }
+    return true;
 }
 
 void Level::genFood(std::pair <int, int> snkPos){
-    int xPos = rand() % dim.first;
-    int yPos = rand() % dim.second;
-    bool posVal = false;
-    while(posVal == false) {
-        if(maze[xPos][yPos] == ' ' && xPos != snkPos.first && yPos != snkPos.second) {
-            posVal = true;
-        } else {
-            xPos = rand() % dim.first;
-            yPos = rand() % dim.second;
-        }
+    if(foodStatus.first != foodStatus.second){
+      int xPos = rand() % dim.first;
+      int yPos = rand() % dim.second;
+      bool posVal = false;
+      while(posVal == false) {
+          if(maze[xPos][yPos] == ' ') {
+              if(xPos == snkPos.first) {
+                  if(yPos != snkPos.second){
+                      posVal = true;
+                  }
+              } else {
+                  posVal = true;
+              }
+          }
+          
+          if(posVal == false) {
+              xPos = rand() % dim.first;
+              yPos = rand() % dim.second;
+          }
+      }
+      foodPos.first = xPos;
+      foodPos.second = yPos;
     }
-    foodPos.first = xPos;
-    foodPos.second = yPos;
 }
 
 void Level::setDim(int x, int y){
@@ -160,4 +179,21 @@ bool Level::verifyCrash(std::pair <int, int> snkPos){
 
 void Level::resetFood(){
     foodStatus.first = 0;
+    if(body.size() != 0) {
+        int i = 0;
+        while(i != body.size()){
+            maze[body[0].first][body[0].second] = ' ';
+            body.erase(body.begin());
+        }
+    }
+}
+
+bool Level::verifyWin(){
+    bool status = false;
+
+    if(foodStatus.first == foodStatus.second){
+        status = true;
+    }
+
+    return status;
 }

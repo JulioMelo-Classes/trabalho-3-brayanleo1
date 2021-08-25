@@ -31,6 +31,9 @@ class Player {
                 @return Booleano que representa se há atualmente uma solução
         */
         bool getWay();
+
+        //! Reseta lista de movimentos
+        void resetCommands();
     
 };
 

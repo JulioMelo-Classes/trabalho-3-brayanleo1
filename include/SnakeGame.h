@@ -21,7 +21,8 @@ class SnakeGame{
             DEATH, //! quando o jogo detectou a batida da cobra e faz os procedimentos necessários
             NEXT_LEVEL, //! quando o jogo detectou que a cobra comeu tudo daquele nível e faz o que o usuário desejar
             RESET, //! quando o jogo recebe o comando de resetar o nível atual
-            RESTART //quando o jogo recebe o comando de recomeçar do primeiro nível
+            RESTART, //! quando o jogo recebe o comando de recomeçar do primeiro nível
+            WIN //! quando o jogo detecta que todas as fases foram concluídas
         };
 
     private:

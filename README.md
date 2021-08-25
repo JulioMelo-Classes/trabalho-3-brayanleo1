@@ -2,35 +2,40 @@
 
 Neste projeto você irá fazer um simulador para o jogo snaze, melhores informações podem ser encontradas no [documento de especificação](https://www.overleaf.com/read/prcdstrjrdjr);
 
-## Sistema de build
+# Como compilar
 
-Escolha um dos sistemas de build que melhor agradar você, lembre que já vimos exemplos com [Makefile](https://www.gnu.org/software/make/manual/make.html) 
-e [Cmake](https://cmake.org/). Esta versão usa compilação básica usando a linha de comando, mas fica a ~~obrigação~~ sugestão, caso você queira mudar.
+Para compilar o projeto, primeiramente você deve criar um arquivo para compilação, criaremos o arquivo build no qual guardaremos o projeto compilado usando os seguintes comandos:
 
-## Organização
-
-Este repositório tem algumas classes iniciais que podem te ajudar a fazer o projeto, porém, fique à vontade para explorar as possibilidades.
-
-## Compilando e executando o exemplo
-
-No linux você pode compilar usando o g++. Apenas faça clone do projeto, e faça:
-
-```bash
-g++ src/*.cpp -o main -I../include
-./main
+```
+mkdir build
+cd build
+cmake ..
+cmake --build .
 ```
 
-No windows você pode compilar usando o g++ ou o cl de forma análoga:
+# Como executar
 
-```bash
-g++ src/*.cpp -o main -I../include
-.\main.exe
+A compilação gera um executável com o nome Snaze dentro da pasta build, __no windows__ esse executável fica na pasta Debug. Logo após a compilação, para executar o programa gerado com um arquivo qualquer use os comandos:
+
+No linux:
 ```
-ou usando o CL
-
-```bash
-cl src/*.cpp -I../include
-.\Snaze.exe
+./Snaze CaminhoDoArquivo/nomeDoArquivo.txt modo(0-sem cauda|1-com cauda)
+```
+No windows:
+```
+.\Debug\Snaze.exe CaminhoDoArquivo\nomeDoArquivo.txt modo(0-sem cauda|1-com cauda)
 ```
 
-__Observação sobre o windows__: Ao realizar testes meu sistema detectou o programa como um virus, para conseguir executar eu tive que usar a versão compilada com o g++ ou configurar o windows defender para ignorar o executável que está na pasta do projeto (o problema só ocorre com a versão compilada pelo CL).
+# Labirintos pré-feitos
+
+Os labiríntos pré feitos e suas descrições são:
+
+easiest.txt -> o mais fácil e rápido, não importa o modo
+easy.txt -> fácil porem mais demorado, não importa o modo
+easyImpPack.txt -> pack com os 2 primeiros fáceis e último pulado caso o modo seja com cauda(por ser impossível gerar comida) e fácil e um pouco mais lento sem cauda
+easyPack.txt -> pack com os 3 níveis fáceis criados, escalando o tempo para cada nível mais a frente, não importa o modo
+impossible.txt -> nível reto impossível, perda de todas as vídas eminente, não importa o modo
+maze1.txt -> nível padrão com pequena chance da cobra colidir contra a parede ou contra si mesma caso tenha cauda
+veryEasy.txt -> nível fácil com agilidade entre o easiest e o easy, não importa o modo
+
+
