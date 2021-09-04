@@ -31,7 +31,7 @@ bool Level::makeLab(std::vector<std::string>::iterator labIt, int foods){
     }
 
     maze = lab;
-    if(labLiv <= foods + 1){
+    if(labLiv < foods){
         return false;
     }
     return true;
@@ -196,4 +196,8 @@ bool Level::verifyWin(){
     }
 
     return status;
+}
+
+std::vector<std::vector<char>>& Level::getMazeRef(){
+    return maze;
 }

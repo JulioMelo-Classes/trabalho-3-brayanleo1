@@ -37,6 +37,7 @@ class SnakeGame{
         Player player; //<! guarda o objeto do tipo player daquele jogo
         int score; //<! guarda a pontuação da cobra
         int levelsGone; //<! guarda a quantidade de níveis que já foram passados
+        char nextMove; //<! guarda o char que representa o próximo movimento indicado pelo player
     public:
         /**
         * @brief construtor padrão, fique à vontade para adicionar parâmetros se desejar

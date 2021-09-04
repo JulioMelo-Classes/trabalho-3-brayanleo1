@@ -84,20 +84,11 @@ void SnakeGame::process_actions(){
         case RUNNING: //o jogo recebe informações de Player(IA)
             {
                 if(player.getWay() == false){
-                    player.find_solution(snake.getPos(), snake.getDirection(), mazes[levelsGone].getFoodPos(), mazes[levelsGone].getMazeIt());
+                    player.find_solution(snake.getPos(), snake.getDirection(), mazes[levelsGone].getFoodPos(), mazes[levelsGone].getMazeRef());
                 }
 
-                char nm = player.next_move();
+                nextMove = player.next_move(snake.getPos(), snake.getDirection(), mazes[levelsGone].getMazeIt());
 
-                if(nm == 'U') {
-                    snake.moveUp();
-                } else if(nm == 'D') {
-                    snake.moveDown();
-                } else if(nm == 'L') {
-                    snake.moveLeft();
-                } else {
-                    snake.moveRight();
-                }
                 break;
             }
         case DEATH:
@@ -123,8 +114,16 @@ void SnakeGame::update(){
     switch(state){
         case RUNNING:
             {
-                /*if(frameCount>0 && frameCount%10 == 0) //depois de 10 frames o jogo pergunta se o usuário quer continuar
-                    state = WAITING_USER;*/
+                
+                if(nextMove == 'U') {
+                    snake.moveUp();
+                } else if(nextMove == 'D') {
+                    snake.moveDown();
+                } else if(nextMove == 'L') {
+                    snake.moveLeft();
+                } else {
+                    snake.moveRight();
+                }
                 
                 //Bateu na parede?
                 if(mazes[levelsGone].verifyCrash(snake.getPos())){

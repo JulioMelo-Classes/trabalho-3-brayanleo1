@@ -17,15 +17,19 @@ class Player {
                 @param snkPos Par contendo a posição x, y da cobra
                 @param snkDir Char representando a direção da cobra
                 @param foodPos Par contendo a posição x, y da comida
-                @param maze Iterator apontando para o labirínto
+                @param maze Referência do labirínto
 
         */
-        void find_solution(std::pair<int, int> snkPos, char snkDir, std::pair<int, int> foodPos, std::vector<std::vector<char>>::iterator maze);
+        void find_solution(std::pair<int, int> snkPos, char snkDir, std::pair<int, int> foodPos, std::vector<std::vector<char>> maze);
 
         /*! Método que retorna o próximo movimento da sequência caso haja ou movimento aleatório caso não haja
+                @param snkPos Par contendo a posição x, y da cobra
+                @param snkDir Char representando a direção da cobra
+                @param maze Iterator apontando para o labirínto
+                
                 @return Char que indica a próxima posição a ser seguida
         */
-        char next_move();
+        char next_move(std::pair<int, int> snkPos, char snkDir, std::vector<std::vector<char>>::iterator maze);
 
         /*!
                 @return Booleano que representa se há atualmente uma solução
@@ -35,6 +39,15 @@ class Player {
         //! Reseta lista de movimentos
         void resetCommands();
     
+        /*! Método que procura pelo mapa até encontrar a comida ou um beco sem saída e retorna uma posição enquanto armazena direções
+                @param snkPos Par contendo a posição x, y da cobra
+                @param snkDir Char representando a direção da cobra
+                @param foodPos Par contendo a posição x, y da comida
+                @param maze Iterator apontando para o labirínto
+
+                @return Pair contendo a posição do beco sem saída ou da comida encontrada por se movimentar
+        */
+        std::pair<int, int> lookAround(std::pair<int, int> snkPos, char snkDir, std::pair<int, int> foodPos, std::vector<std::vector<char>>::iterator maze);
 };
 
 #endif

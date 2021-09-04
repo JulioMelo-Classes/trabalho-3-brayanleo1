@@ -95,6 +95,8 @@ class Level {
                 @return Booleano de valor  true se todas as comidas foram consumidas e false caso contrário
         */
         bool verifyWin();
+
+        std::vector<std::vector<char>>& getMazeRef();
 };
 
 #endif
