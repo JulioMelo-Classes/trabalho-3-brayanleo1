@@ -324,6 +324,6 @@ void SnakeGame::loop(){
         process_actions();
         update();
         render();
-        wait(1000);// espera 1 segundo entre cada frame
+        wait(100);// espera 1 segundo entre cada frame
     }
 }
