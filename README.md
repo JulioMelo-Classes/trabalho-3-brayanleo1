@@ -36,6 +36,8 @@ easyImpPack.txt -> pack com os 2 primeiros fáceis e último pulado caso o modo 
 easyPack.txt -> pack com os 3 níveis fáceis criados, escalando o tempo para cada nível mais a frente, não importa o modo <br>
 impossible.txt -> nível reto impossível, perda de todas as vídas eminente, não importa o modo <br>
 maze1.txt -> nível padrão com pequena chance da cobra colidir contra a parede ou contra si mesma caso tenha cauda <br>
+maze1C.txt -> nível padrão com pequena alteração para evitar que a cobra colida com a parede em condições normais <br>
+maze2.txt -> nível disponibilizado no discord para teste do algorítmo de esquiva da cobra, sendo também o pior caso com o uso do algorítmo de solução por recursão <br>
 veryEasy.txt -> nível fácil com agilidade entre o easiest e o easy, não importa o modo <br>
 
 
