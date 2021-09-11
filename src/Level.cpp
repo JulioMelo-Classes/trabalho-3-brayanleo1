@@ -38,28 +38,27 @@ bool Level::makeLab(std::vector<std::string>::iterator labIt, int foods){
 }
 
 void Level::genFood(std::pair <int, int> snkPos){
+    std::vector<std::pair <int, int>> posLiv; //As posições livres/desocupadas
+
+    for(int x = 0; x != dim.first; x++) {
+        for(int y = 0; y != dim.second; y++){
+            bool val = true;
+            if(x == snkPos.first){
+                if(y == snkPos.second){
+                    val = false; //Tá numa posição igual a da cobra
+                }
+            }
+
+            if( val == true && maze[x][y] == ' '){
+                posLiv.push_back(make_pair(x,y)); //Tá numa posição diferente e livre
+            }
+        }
+    }
+
+    int foodPlace = rand() % posLiv.size();
+
     if(foodStatus.first != foodStatus.second){
-      int xPos = rand() % dim.first;
-      int yPos = rand() % dim.second;
-      bool posVal = false;
-      while(posVal == false) {
-          if(maze[xPos][yPos] == ' ') {
-              if(xPos == snkPos.first) {
-                  if(yPos != snkPos.second){
-                      posVal = true;
-                  }
-              } else {
-                  posVal = true;
-              }
-          }
-          
-          if(posVal == false) {
-              xPos = rand() % dim.first;
-              yPos = rand() % dim.second;
-          }
-      }
-      foodPos.first = xPos;
-      foodPos.second = yPos;
+        foodPos = posLiv[foodPlace];
     }
 }
 

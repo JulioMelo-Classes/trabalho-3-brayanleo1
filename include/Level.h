@@ -96,6 +96,9 @@ class Level {
         */
         bool verifyWin();
 
+        /*! Retorna a referência da matriz de char chamada maze
+                @return Referência da matriz de char chamada maze
+        */
         std::vector<std::vector<char>>& getMazeRef();
 };
 
